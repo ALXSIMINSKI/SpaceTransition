@@ -56,7 +56,6 @@ function create() {
 
     startPoint = this.physics.add.image(1100, 400, 'startMeteorite');
     startPoint.body.setImmovable(true);
-    //startPoint.body.allowGravity = false;
 
     player = this.physics.add.sprite(1060, 300, 'dude', 4);
     player.setBounce(0);
@@ -141,13 +140,13 @@ function stopGame() {
 }
 
 function defineTimers(time) {
-    meteoritesFlow = time.addEvent({ delay: 800, callback: createNewMeteorite, callbackScope: this, loop: true});
+    meteoritesFlow = time.addEvent({delay: 800, callback: createNewMeteorite, callbackScope: this, loop: true});
     meteoritesFlow.paused = true;
 
-    timer = time.addEvent({ delay: 10, callback: increaseTimeAlive, callbackScope: this, loop: true});
+    timer = time.addEvent({delay: 10, callback: increaseTimeAlive, callbackScope: this, loop: true});
     timer.paused = true;
 
-    posterDefectTimer = time.addEvent({ delay: (Math.random()*500) + 100, callback: posterDefect, callbackScope: this, loop: true});
+    posterDefectTimer = time.addEvent({delay: (Math.random()*500) + 100, callback: posterDefect, callbackScope: this, loop: true});
 }
 
 function defineAnimations(animations) {
@@ -172,7 +171,7 @@ function defineAnimations(animations) {
 
     animations.create({
         key: 'right',
-        frames: animations.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frames: animations.generateFrameNumbers('dude', {start: 5, end: 8}),
         framerate: 10,
         repeat: -1
     });
