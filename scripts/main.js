@@ -57,14 +57,14 @@ function create() {
 
     meteorites = this.physics.add.group(meteoritesConfig);
 
-    startPoint = this.physics.add.image(config.width-200, config.height/2, 'startMeteorite');
+    startPoint = this.physics.add.image(canvasWidth-200, canvasHeight/2, 'startMeteorite');
     startPoint.body.setImmovable(true);
 
-    player = this.physics.add.sprite(config.width-250, config.height/2 - 100, 'dude', 4);
+    player = this.physics.add.sprite(canvasWidth-250, canvasHeight/2 - 100, 'dude', 4);
     player.setBounce(0);
     player.setCollideWorldBounds(true);
 
-    poster = this.physics.add.sprite(config.width/3, config.height/2, 'poster');
+    poster = this.physics.add.sprite(canvasWidth/3, canvasHeight/2, 'poster');
 
     timeAliveText = this.add.text(16, 16, 'Time: 0.00' , font);
 
@@ -120,21 +120,21 @@ function startGame() {
 }
 
 function stopGame() {
-    poster.x = config.width/3;
-    poster.y = config.height/2;
+    poster.x = canvasWidth/3;
+    poster.y = canvasHeight/2;
     poster.setVelocityX(0);
     timeAliveText.setText('Time: 0.00');
     timeAlive = 0;
     gameState = 0;
     startPoint.setVelocityX(0);
-    startPoint.x = config.width-200;
-    startPoint.y = config.height/2;
+    startPoint.x = canvasWidth-200;
+    startPoint.y = canvasHeight/2;
     player.setVelocityX(0);
     player.setVelocityY(0);
     player.body.setGravityY(0);
     player.anims.play('turn');
-    player.x = config.width-250;
-    player.y = config.height/2 - 100;
+    player.x = canvasWidth-250;
+    player.y = canvasHeight/2 - 100;
     meteoritesFlow.paused = true;
     timer.paused = true;
     meteorites.clear(true, true);
@@ -191,7 +191,7 @@ function defineAnimations(animations) {
 }
 
 function createNewMeteorite() {
-    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
+    var m = meteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
