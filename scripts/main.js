@@ -188,7 +188,7 @@ function defineAnimations(animations) {
 }
 
 function createNewMeteorite() {
-    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.floor(Math.random()*3)]);
+    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.round(Math.random()*3)]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
