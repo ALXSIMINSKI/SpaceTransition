@@ -43,12 +43,15 @@ function preload() {
     this.load.image('helmet', 'images/meteorites/helmet.png');
     this.load.image('curiosity', 'images/meteorites/curiosity.png');
     this.load.image('cat', 'images/meteorites/cat.png');
+    this.load.image('ironman', 'images/meteorites/ironman.png');
+    this.load.image('captain', 'images/meteorites/captain.png');
+    this.load.image('lenin', 'images/meteorites/lenin.png');
     this.load.spritesheet('dude', 'images/dude.png', {frameWidth: 32, frameHeight: 48});
     this.load.spritesheet('poster', 'images/poster.png', {frameWidth: 400, frameHeight: 100});
 }
 
 function create() {
-    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'cat'];
+    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'cat', 'ironman', 'captain', 'lenin'];
 
     this.physics.world.setBounds(0, 0, canvasWidth, canvasHeight, true, true, true, false);
 
@@ -144,7 +147,7 @@ function defineColliders(physics) {
 }
 
 function defineTimers(time) {
-    meteoritesFlow = time.addEvent({delay: 700, callback: createNewMeteorite, callbackScope: this, loop: true});
+    meteoritesFlow = time.addEvent({delay: 600, callback: createNewMeteorite, callbackScope: this, loop: true});
     meteoritesFlow.paused = true;
 
     timer = time.addEvent({delay: 10, callback: increaseTimeAlive, callbackScope: this, loop: true});
@@ -188,7 +191,7 @@ function defineAnimations(animations) {
 }
 
 function createNewMeteorite() {
-    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.round(Math.random()*3)]);
+    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
