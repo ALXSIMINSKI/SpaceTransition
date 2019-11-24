@@ -1,8 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 1200,
-    height: 800,
-    backgroundColor: '#ebffda',
+    width: window.innerWidth,
+    height: window.innerHeight,
     physics: {
         default: 'arcade',
         acrade: {
@@ -10,11 +9,17 @@ var config = {
             debug: false
         }
     },
+    transparent: true,
     scene: {
         preload: preload,
         create: create,
         update: update
     }
+};
+
+var meteoritesConfig = {
+    angularDrag: 2,
+    angularVelocity: 60
 };
 
 var game = new Phaser.Game(config);
@@ -33,7 +38,6 @@ var cursors;
 var meteoritesLooks = [];
 
 function preload() {
-    this.load.image('space', 'images/space.png');
     this.load.image('startMeteorite', 'images/meteorites/meteorite1.png');
     this.load.image('defaultMeteorite', 'images/meteorites/meteorite2.png');
     this.load.image('helmet', 'images/meteorites/helmet.png');
@@ -46,34 +50,28 @@ function preload() {
 function create() {
     meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'cat'];
 
-    this.add.image(canvasWidth/2, canvasHeight/2, 'space');
     this.physics.world.setBounds(0, 0, canvasWidth, canvasHeight, true, true, true, false);
 
-    meteorites = this.physics.add.group({
-        angularDrag: 2,
-        angularVelocity: 60
-    });
+    meteorites = this.physics.add.group(meteoritesConfig);
 
-    startPoint = this.physics.add.image(1100, 400, 'startMeteorite');
+    startPoint = this.physics.add.image(config.width-200, config.height/2, 'startMeteorite');
     startPoint.body.setImmovable(true);
 
-    player = this.physics.add.sprite(1060, 300, 'dude', 4);
+    player = this.physics.add.sprite(config.width-250, config.height/2 - 100, 'dude', 4);
     player.setBounce(0);
     player.setCollideWorldBounds(true);
 
-    poster = this.physics.add.sprite(500, 400, 'poster');
+    poster = this.physics.add.sprite(config.width/3, config.height/2, 'poster');
 
     timeAliveText = this.add.text(16, 16, 'Time: 0.00' , font);
 
     defineAnimations(this.anims);
 
-    this.physics.add.collider(player, meteorites, meteoriteCollidePlayerReaction);
-    this.physics.add.collider(player, startPoint);
-    this.physics.add.collider(meteorites, meteorites, meteoriteCollideMeteoriteReaction);
-
-    cursors = this.input.keyboard.createCursorKeys();
+    defineColliders(this.physics);
 
     defineTimers(this.time);
+
+    cursors = this.input.keyboard.createCursorKeys();
 }
 
 function update() {
@@ -119,28 +117,34 @@ function startGame() {
 }
 
 function stopGame() {
-    poster.x = 600;
-    poster.y = 400;
+    poster.x = config.width/3;
+    poster.y = config.height/2;
     poster.setVelocityX(0);
     timeAliveText.setText('Time: 0.00');
     timeAlive = 0;
     gameState = 0;
     startPoint.setVelocityX(0);
-    startPoint.x = 1100;
-    startPoint.y = 400;
+    startPoint.x = config.width-200;
+    startPoint.y = config.height/2;
     player.setVelocityX(0);
     player.setVelocityY(0);
     player.body.setGravityY(0);
     player.anims.play('turn');
-    player.x = 1060;
-    player.y = 290;
+    player.x = config.width-250;
+    player.y = config.height/2 - 100;
     meteoritesFlow.paused = true;
     timer.paused = true;
     meteorites.clear(true, true);
 }
 
+function defineColliders(physics) {
+    physics.add.collider(player, meteorites, meteoriteCollidePlayerReaction);
+    physics.add.collider(player, startPoint);
+    physics.add.collider(meteorites, meteorites, meteoriteCollideMeteoriteReaction);
+}
+
 function defineTimers(time) {
-    meteoritesFlow = time.addEvent({delay: 800, callback: createNewMeteorite, callbackScope: this, loop: true});
+    meteoritesFlow = time.addEvent({delay: 700, callback: createNewMeteorite, callbackScope: this, loop: true});
     meteoritesFlow.paused = true;
 
     timer = time.addEvent({delay: 10, callback: increaseTimeAlive, callbackScope: this, loop: true});
@@ -184,8 +188,8 @@ function defineAnimations(animations) {
 }
 
 function createNewMeteorite() {
-    var p = meteorites.create(1300, Math.floor(Math.random() * 550) + 50, meteoritesLooks[0]);
-    p.setVelocity(-100, (Math.random()*40) - 20);
+    var m = meteorites.create(config.width + 100, Math.random() * config.height + 100, meteoritesLooks[Math.floor(Math.random()*3)]);
+    m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
 function increaseTimeAlive() {

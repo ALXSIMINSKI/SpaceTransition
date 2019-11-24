@@ -1,8 +1,21 @@
 * {
-    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
-header {
-    font-size: 50px;
-    text-align: center;
+body {
+    overflow: hidden;
+}
+
+img.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    min-height: 100%;
+    min-width: 100%;
+
+    width: 100%;
+    height: auto;
 }
