@@ -42,16 +42,16 @@ function preload() {
     this.load.image('defaultMeteorite', 'images/meteorites/meteorite2.png');
     this.load.image('helmet', 'images/meteorites/helmet.png');
     this.load.image('curiosity', 'images/meteorites/curiosity.png');
-    this.load.image('cat', 'images/meteorites/cat.png');
     this.load.image('ironman', 'images/meteorites/ironman.png');
     this.load.image('captain', 'images/meteorites/captain.png');
     this.load.image('lenin', 'images/meteorites/lenin.png');
+    this.load.image('kr', 'images/meteorites/kr.png');
     this.load.spritesheet('dude', 'images/dude.png', {frameWidth: 32, frameHeight: 48});
     this.load.spritesheet('poster', 'images/poster.png', {frameWidth: 400, frameHeight: 100});
 }
 
 function create() {
-    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'cat', 'ironman', 'captain', 'lenin'];
+    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'ironman', 'captain', 'lenin', 'kr'];
 
     this.physics.world.setBounds(0, 0, canvasWidth, canvasHeight, true, true, true, false);
 
