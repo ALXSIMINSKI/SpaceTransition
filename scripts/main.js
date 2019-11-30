@@ -45,13 +45,12 @@ function preload() {
     this.load.image('ironman', 'images/meteorites/ironman.png');
     this.load.image('captain', 'images/meteorites/captain.png');
     this.load.image('lenin', 'images/meteorites/lenin.png');
-    this.load.image('kr', 'images/meteorites/kr.png');
     this.load.spritesheet('dude', 'images/dude.png', {frameWidth: 32, frameHeight: 48});
     this.load.spritesheet('poster', 'images/poster.png', {frameWidth: 400, frameHeight: 100});
 }
 
 function create() {
-    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'ironman', 'captain', 'lenin', 'kr'];
+    meteoritesLooks = ['defaultMeteorite', 'helmet', 'curiosity', 'ironman', 'captain', 'lenin'];
 
     this.physics.world.setBounds(0, 0, canvasWidth, canvasHeight, true, true, true, false);
 
@@ -117,6 +116,7 @@ function startGame() {
     player.body.setGravityY(300);
     meteoritesFlow.paused = false;
     timer.paused = false;
+    interestingMeteoritesFlow.paused = false;
 }
 
 function stopGame() {
@@ -137,6 +137,7 @@ function stopGame() {
     player.y = canvasHeight/2 - 100;
     meteoritesFlow.paused = true;
     timer.paused = true;
+    interestingMeteoritesFlow.paused = true;
     meteorites.clear(true, true);
 }
 
@@ -149,6 +150,9 @@ function defineColliders(physics) {
 function defineTimers(time) {
     meteoritesFlow = time.addEvent({delay: 600, callback: createNewMeteorite, callbackScope: this, loop: true});
     meteoritesFlow.paused = true;
+
+    interestingMeteoritesFlow = time.addEvent({delay: 10000, callback: createNewInterestingMeteorite, callbackScope: this, loop: true});
+    interestingMeteoritesFlow.paused = true;
 
     timer = time.addEvent({delay: 10, callback: increaseTimeAlive, callbackScope: this, loop: true});
     timer.paused = true;
@@ -191,6 +195,11 @@ function defineAnimations(animations) {
 }
 
 function createNewMeteorite() {
+    var m = meteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[0]);
+    m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
+}
+
+function createNewInterestingMeteorite() {
     var m = meteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
