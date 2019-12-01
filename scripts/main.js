@@ -34,6 +34,7 @@ var player;
 var poster;
 var startPoint;
 var meteorites;
+var interestingMeteorites;
 var cursors;
 var meteoritesLooks = [];
 
@@ -55,6 +56,7 @@ function create() {
     this.physics.world.setBounds(0, 0, canvasWidth, canvasHeight, true, true, true, false);
 
     meteorites = this.physics.add.group(meteoritesConfig);
+    interestingMeteorites = this.physics.add.group(meteoritesConfig);
 
     startPoint = this.physics.add.image(canvasWidth-200, canvasHeight/2, 'startMeteorite');
     startPoint.body.setImmovable(true);
@@ -105,8 +107,16 @@ function meteoriteCollidePlayerReaction(player, collidedMeteorite) {
     collidedMeteorite.setAngularVelocity(Math.random()*300);
 }
 
+function meteoriteCollideInterestingMeteoriteReaction(meteorite, interestingMeteorite) {
+
+}
+
 function meteoriteCollideMeteoriteReaction(meteorite1, meteorite2) {
 
+}
+
+function interestingMeteoriteCollidePlayerReaction(player, meteorite) {
+    player.setVelocityY(-400);
 }
 
 function startGame() {
@@ -139,12 +149,15 @@ function stopGame() {
     timer.paused = true;
     interestingMeteoritesFlow.paused = true;
     meteorites.clear(true, true);
+    interestingMeteorites.clear(true, true);
 }
 
 function defineColliders(physics) {
     physics.add.collider(player, meteorites, meteoriteCollidePlayerReaction);
+    physics.add.collider(player, interestingMeteorites, interestingMeteoriteCollidePlayerReaction);
     physics.add.collider(player, startPoint);
     physics.add.collider(meteorites, meteorites, meteoriteCollideMeteoriteReaction);
+    physics.add.collider(meteorites, interestingMeteorites, meteoriteCollideInterestingMeteoriteReaction);
 }
 
 function defineTimers(time) {
@@ -200,7 +213,7 @@ function createNewMeteorite() {
 }
 
 function createNewInterestingMeteorite() {
-    var m = meteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
+    var m = interestingMeteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
