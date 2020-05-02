@@ -1,5 +1,5 @@
 # SpaceTransition
 Main goal - don't fall!
-![alt text](images\start.png "Описание")
+![Image alt](https://github.com/ALXSIMINSKI/SpaceTransition/raw/master/images/start.png)
 
-![alt text](images\inprogress.png "Описание")
+![Image alt](https://github.com/ALXSIMINSKI/SpaceTransition/raw/master/images/inprogress.png)
