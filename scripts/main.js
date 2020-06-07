@@ -107,16 +107,16 @@ function meteoriteCollidePlayerReaction(player, collidedMeteorite) {
     collidedMeteorite.setAngularVelocity(Math.random()*300);
 }
 
+function interestingMeteoriteCollidePlayerReaction(player, meteorite) {
+    meteorite.setAngularVelocity(Math.random()*300);
+}
+
 function meteoriteCollideInterestingMeteoriteReaction(meteorite, interestingMeteorite) {
 
 }
 
 function meteoriteCollideMeteoriteReaction(meteorite1, meteorite2) {
 
-}
-
-function interestingMeteoriteCollidePlayerReaction(player, meteorite) {
-    player.setVelocityY(-400);
 }
 
 function startGame() {
@@ -213,7 +213,7 @@ function createNewMeteorite() {
 }
 
 function createNewInterestingMeteorite() {
-    var m = interestingMeteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.round(Math.random()*(meteoritesLooks.length - 1))]);
+    var m = interestingMeteorites.create(canvasWidth + 100, Math.random() * canvasHeight + 100, meteoritesLooks[Math.floor(Math.random()*(meteoritesLooks.length - 1)) + 1]);
     m.setVelocity(-1*Math.random()*30 - 90, (Math.random()*20) - 10);
 }
 
